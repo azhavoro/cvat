@@ -53,7 +53,7 @@ For more information about supported formats look at the
 <!--lint disable maximum-line-length-->
 
 | Annotation format                                                                                        | Import | Export |
-| -------------------------------------------------------------------------------------------------------- | ------ | ------ |
+| -------------------------------------------------------------------------------------------------------  | ------ | ------ |
 | [CVAT for images](https://openvinotoolkit.github.io/cvat/docs/for-developers/xml_format/#annotation)     | X      | X      |
 | [CVAT for a video](https://openvinotoolkit.github.io/cvat/docs/for-developers/xml_format/#interpolation) | X      | X      |
 | [Datumaro](https://github.com/openvinotoolkit/datumaro)                                                  |        | X      |
@@ -162,8 +162,8 @@ Other ways to ask questions and get our support:
 - [DataIsKey](https://dataiskey.eu/annotation-tool/) uses CVAT as their prime data labeling tool
   to offer annotation services for projects of any size.
 - [Human Protocol](https://hmt.ai) uses CVAT as a way of adding annotation service to the human protocol.
-  <!-- prettier-ignore-start -->
-  <!-- Badges -->
+<!-- prettier-ignore-start -->
+<!-- Badges -->
 
 [docker-server-pulls-img]: https://img.shields.io/docker/pulls/openvino/cvat_server.svg?style=flat-square&label=server%20pulls
 [docker-server-image-url]: https://hub.docker.com/r/openvino/cvat_server
