@@ -54,4 +54,6 @@ if settings.IAM_TYPE == "BASIC":
             ),
         ]
 
-urlpatterns = [path("auth/", include(urlpatterns))]
+urlpatterns = [
+    path("auth/", include(urlpatterns)),
+]

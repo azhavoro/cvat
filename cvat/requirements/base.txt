@@ -113,6 +113,7 @@ djangorestframework==3.16.0
     #   drf-spectacular
 drf-spectacular==0.26.2
     # via -r cvat/requirements/base.in
+djangorestframework-api-key==2.3.0
 easyprocess==1.1
     # via pyunpack
 entrypoint2==1.1
