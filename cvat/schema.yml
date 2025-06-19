@@ -25,7 +25,6 @@ paths:
               $ref: '#/components/schemas/AssetWriteRequest'
         required: true
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -52,7 +51,6 @@ paths:
       tags:
       - assets
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -74,7 +72,6 @@ paths:
       tags:
       - assets
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -82,202 +79,6 @@ paths:
       responses:
         '204':
           description: The asset has been deleted
-  /api/auth/api_tokens:
-    get:
-      operationId: auth_list_api_tokens
-      summary: List API tokens
-      parameters:
-      - name: filter
-        required: false
-        in: query
-        description: |2-
-
-          JSON Logic filter. This filter can be used to perform complex filtering by grouping rules.
-
-          For example, using such a filter you can get all resources created by you:
-
-              - {"and":[{"==":[{"var":"owner"},"<user>"]}]}
-
-          Details about the syntax used can be found at the link: https://jsonlogic.com/
-
-           Available filter_fields: ['name', 'id', 'owner', 'created_date', 'updated_date', 'expiry_date', 'read_only'].
-        schema:
-          type: string
-      - name: name
-        in: query
-        description: A simple equality filter for the name field
-        schema:
-          type: string
-      - name: owner
-        in: query
-        description: A simple equality filter for the owner field
-        schema:
-          type: integer
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
-      - name: page_size
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: search
-        required: false
-        in: query
-        description: 'A search term. Available search_fields: (''name'',)'
-        schema:
-          type: string
-      - name: sort
-        required: false
-        in: query
-        description: 'Which field to use when ordering the results. Available ordering_fields:
-          [''name'', ''id'', ''owner'', ''created_date'', ''updated_date'', ''expiry_date'',
-          ''read_only'']'
-        schema:
-          type: string
-      tags:
-      - auth
-      security:
-      - tokenAuth: []
-      - signatureAuth: []
-      - sessionAuth: []
-        csrfAuth: []
-      - basicAuth: []
-      responses:
-        '200':
-          content:
-            application/vnd.cvat+json:
-              schema:
-                $ref: '#/components/schemas/PaginatedApiTokenReadList'
-          description: ''
-    post:
-      operationId: auth_create_api_tokens
-      summary: Create an API token
-      tags:
-      - auth
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ApiTokenWriteRequest'
-      security:
-      - tokenAuth: []
-      - signatureAuth: []
-      - sessionAuth: []
-        csrfAuth: []
-      - basicAuth: []
-      responses:
-        '201':
-          content:
-            application/vnd.cvat+json:
-              schema:
-                $ref: '#/components/schemas/ApiTokenCreateRead'
-          description: ''
-  /api/auth/api_tokens/{id}:
-    get:
-      operationId: auth_retrieve_api_tokens
-      summary: Get API token details
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this API Token.
-        required: true
-      tags:
-      - auth
-      security:
-      - tokenAuth: []
-      - signatureAuth: []
-      - sessionAuth: []
-        csrfAuth: []
-      - basicAuth: []
-      responses:
-        '200':
-          content:
-            application/vnd.cvat+json:
-              schema:
-                $ref: '#/components/schemas/ApiTokenRead'
-          description: ''
-    patch:
-      operationId: auth_partial_update_api_tokens
-      summary: Update an API token
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this API Token.
-        required: true
-      tags:
-      - auth
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedApiTokenWriteRequest'
-      security:
-      - tokenAuth: []
-      - signatureAuth: []
-      - sessionAuth: []
-        csrfAuth: []
-      - basicAuth: []
-      responses:
-        '200':
-          content:
-            application/vnd.cvat+json:
-              schema:
-                $ref: '#/components/schemas/ApiTokenRead'
-          description: ''
-    delete:
-      operationId: auth_destroy_api_tokens
-      summary: Revoke API token
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this API Token.
-        required: true
-      tags:
-      - auth
-      security:
-      - tokenAuth: []
-      - signatureAuth: []
-      - sessionAuth: []
-        csrfAuth: []
-      - basicAuth: []
-      responses:
-        '204':
-          description: The token was successfully revoked
-  /api/auth/api_tokens/self:
-    get:
-      operationId: auth_retrieve_api_tokens_self
-      description: |
-        Get details of the API token used for the current request.
-        This endpoint is only allowed if the request is performed using an API token.
-      summary: Get current API token details
-      tags:
-      - auth
-      security:
-      - tokenAuth: []
-      - signatureAuth: []
-      - sessionAuth: []
-        csrfAuth: []
-      - basicAuth: []
-      responses:
-        '200':
-          content:
-            application/vnd.cvat+json:
-              schema:
-                $ref: '#/components/schemas/ApiTokenRead'
-          description: ''
-        '400':
-          description: Current authentication doesn't use an API token
   /api/auth/login:
     post:
       operationId: auth_create_login
@@ -300,7 +101,6 @@ paths:
               $ref: '#/components/schemas/LoginSerializerExRequest'
         required: true
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -324,7 +124,6 @@ paths:
       tags:
       - auth
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -354,7 +153,6 @@ paths:
               $ref: '#/components/schemas/PasswordChangeRequest'
         required: true
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -383,7 +181,6 @@ paths:
               $ref: '#/components/schemas/PasswordResetSerializerExRequest'
         required: true
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -415,7 +212,6 @@ paths:
               $ref: '#/components/schemas/PasswordResetConfirmRequest'
         required: true
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -440,7 +236,6 @@ paths:
               $ref: '#/components/schemas/RegisterSerializerExRequest'
         required: true
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -478,7 +273,6 @@ paths:
               $ref: '#/components/schemas/SigningRequest'
         required: true
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -592,7 +386,6 @@ paths:
       tags:
       - cloudstorages
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -679,7 +472,6 @@ paths:
               $ref: '#/components/schemas/CloudStorageWriteRequest'
         required: true
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -705,7 +497,6 @@ paths:
       tags:
       - cloudstorages
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -782,7 +573,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedCloudStorageWriteRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -807,7 +597,6 @@ paths:
       tags:
       - cloudstorages
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -831,7 +620,6 @@ paths:
       tags:
       - cloudstorages
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -876,7 +664,6 @@ paths:
       tags:
       - cloudstorages
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -902,7 +689,6 @@ paths:
       tags:
       - cloudstorages
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -928,7 +714,6 @@ paths:
       tags:
       - cloudstorages
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1024,7 +809,6 @@ paths:
       tags:
       - comments
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1064,7 +848,6 @@ paths:
               $ref: '#/components/schemas/CommentWriteRequest'
         required: true
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1090,7 +873,6 @@ paths:
       tags:
       - comments
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1120,7 +902,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedCommentWriteRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1145,7 +926,6 @@ paths:
       tags:
       - comments
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1165,7 +945,6 @@ paths:
             schema:
               $ref: '#/components/schemas/ConsensusMergeCreateRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1244,7 +1023,6 @@ paths:
       tags:
       - consensus
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1270,7 +1048,6 @@ paths:
       tags:
       - consensus
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1300,7 +1077,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedConsensusSettingsRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1377,7 +1153,6 @@ paths:
       tags:
       - events
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1419,7 +1194,6 @@ paths:
               $ref: '#/components/schemas/ClientEventsRequest'
         required: true
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1495,7 +1269,6 @@ paths:
       tags:
       - events
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1521,7 +1294,6 @@ paths:
             schema:
               $ref: '#/components/schemas/AnnotationGuideWriteRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1547,7 +1319,6 @@ paths:
       tags:
       - guides
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1577,7 +1348,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedAnnotationGuideWriteRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1603,7 +1373,6 @@ paths:
       tags:
       - guides
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1680,7 +1449,6 @@ paths:
       tags:
       - invitations
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1720,7 +1488,6 @@ paths:
               $ref: '#/components/schemas/InvitationWriteRequest'
         required: true
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1746,7 +1513,6 @@ paths:
       tags:
       - invitations
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1776,7 +1542,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedInvitationWriteRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1801,7 +1566,6 @@ paths:
       tags:
       - invitations
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1823,7 +1587,6 @@ paths:
       tags:
       - invitations
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1851,7 +1614,6 @@ paths:
       tags:
       - invitations
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1873,7 +1635,6 @@ paths:
       tags:
       - invitations
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -1978,7 +1739,6 @@ paths:
       tags:
       - issues
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2018,7 +1778,6 @@ paths:
               $ref: '#/components/schemas/IssueWriteRequest'
         required: true
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2044,7 +1803,6 @@ paths:
       tags:
       - issues
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2074,7 +1832,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedIssueWriteRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2099,7 +1856,6 @@ paths:
       tags:
       - issues
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2240,7 +1996,6 @@ paths:
       tags:
       - jobs
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2308,7 +2063,6 @@ paths:
                 summary: create gt job with manual frame selection
         required: true
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2334,7 +2088,6 @@ paths:
       tags:
       - jobs
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2364,7 +2117,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedJobWriteRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2394,7 +2146,6 @@ paths:
       tags:
       - jobs
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2461,7 +2212,6 @@ paths:
       tags:
       - jobs
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2534,7 +2284,6 @@ paths:
             schema:
               $ref: '#/components/schemas/AnnotationFileRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2571,7 +2320,6 @@ paths:
             schema:
               $ref: '#/components/schemas/LabeledDataRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2609,7 +2357,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedLabeledDataRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2630,7 +2377,6 @@ paths:
       tags:
       - jobs
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2681,7 +2427,6 @@ paths:
       tags:
       - jobs
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2708,7 +2453,6 @@ paths:
       tags:
       - jobs
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2738,7 +2482,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedJobDataMetaWriteRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2801,7 +2544,6 @@ paths:
       tags:
       - jobs
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2835,7 +2577,6 @@ paths:
       tags:
       - jobs
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2857,7 +2598,6 @@ paths:
       tags:
       - jobs
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -2905,7 +2645,6 @@ paths:
                   - 22
                 summary: set honeypots manually
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3032,7 +2771,6 @@ paths:
       tags:
       - labels
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3058,7 +2796,6 @@ paths:
       tags:
       - labels
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3090,7 +2827,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedLabelRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3117,7 +2853,6 @@ paths:
       tags:
       - labels
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3132,7 +2867,6 @@ paths:
       tags:
       - lambda
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3154,7 +2888,6 @@ paths:
       tags:
       - lambda
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3191,7 +2924,6 @@ paths:
             schema:
               $ref: '#/components/schemas/OnlineFunctionCallRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3206,7 +2938,6 @@ paths:
       tags:
       - lambda
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3248,7 +2979,6 @@ paths:
               $ref: '#/components/schemas/FunctionCallRequest'
         required: true
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3274,7 +3004,6 @@ paths:
       tags:
       - lambda
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3299,7 +3028,6 @@ paths:
       tags:
       - lambda
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3386,7 +3114,6 @@ paths:
       tags:
       - memberships
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3412,7 +3139,6 @@ paths:
       tags:
       - memberships
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3442,7 +3168,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedMembershipWriteRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3467,7 +3192,6 @@ paths:
       tags:
       - memberships
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3540,7 +3264,6 @@ paths:
       tags:
       - organizations
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3564,7 +3287,6 @@ paths:
               $ref: '#/components/schemas/OrganizationWriteRequest'
         required: true
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3590,7 +3312,6 @@ paths:
       tags:
       - organizations
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3620,7 +3341,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedOrganizationWriteRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3645,7 +3365,6 @@ paths:
       tags:
       - organizations
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3742,7 +3461,6 @@ paths:
       tags:
       - projects
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3782,7 +3500,6 @@ paths:
               $ref: '#/components/schemas/ProjectWriteRequest'
         required: true
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3808,7 +3525,6 @@ paths:
       tags:
       - projects
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3838,7 +3554,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedProjectWriteRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3863,7 +3578,6 @@ paths:
       tags:
       - projects
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3907,7 +3621,6 @@ paths:
       tags:
       - projects
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -3981,7 +3694,6 @@ paths:
             schema:
               $ref: '#/components/schemas/DatasetFileRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -4048,7 +3760,6 @@ paths:
       tags:
       - projects
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -4082,7 +3793,6 @@ paths:
       tags:
       - projects
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -4154,7 +3864,6 @@ paths:
             schema:
               $ref: '#/components/schemas/ProjectFileRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -4271,7 +3980,6 @@ paths:
       tags:
       - quality
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -4385,7 +4093,6 @@ paths:
       tags:
       - quality
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -4420,7 +4127,6 @@ paths:
             schema:
               $ref: '#/components/schemas/QualityReportCreateRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -4458,7 +4164,6 @@ paths:
       tags:
       - quality
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -4484,7 +4189,6 @@ paths:
       tags:
       - quality
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -4581,7 +4285,6 @@ paths:
       tags:
       - quality
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -4607,7 +4310,6 @@ paths:
       tags:
       - quality
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -4637,7 +4339,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedQualitySettingsRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -4738,7 +4439,6 @@ paths:
       tags:
       - requests
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -4763,7 +4463,6 @@ paths:
       tags:
       - requests
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -4788,7 +4487,6 @@ paths:
       tags:
       - requests
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -4918,7 +4616,6 @@ paths:
       tags:
       - schema
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -4946,7 +4643,6 @@ paths:
       tags:
       - server
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -4965,7 +4661,6 @@ paths:
       tags:
       - server
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -4984,7 +4679,6 @@ paths:
       tags:
       - server
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5014,7 +4708,6 @@ paths:
       tags:
       - server
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5168,7 +4861,6 @@ paths:
       tags:
       - tasks
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5211,7 +4903,6 @@ paths:
               $ref: '#/components/schemas/TaskWriteRequest'
         required: true
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5237,7 +4928,6 @@ paths:
       tags:
       - tasks
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5267,7 +4957,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedTaskWriteRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5293,7 +4982,6 @@ paths:
       tags:
       - tasks
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5315,7 +5003,6 @@ paths:
       tags:
       - tasks
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5390,7 +5077,6 @@ paths:
             schema:
               $ref: '#/components/schemas/AnnotationFileRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5427,7 +5113,6 @@ paths:
             schema:
               $ref: '#/components/schemas/LabeledDataRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5465,7 +5150,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedLabeledDataRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5490,7 +5174,6 @@ paths:
       tags:
       - tasks
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5534,7 +5217,6 @@ paths:
       tags:
       - tasks
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5591,7 +5273,6 @@ paths:
       tags:
       - tasks
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5700,7 +5381,6 @@ paths:
             schema:
               $ref: '#/components/schemas/DataRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5726,7 +5406,6 @@ paths:
       tags:
       - tasks
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5756,7 +5435,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedDataMetaWriteRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5819,7 +5497,6 @@ paths:
       tags:
       - tasks
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5853,7 +5530,6 @@ paths:
       tags:
       - tasks
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5880,7 +5556,6 @@ paths:
       tags:
       - tasks
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5907,7 +5582,6 @@ paths:
       tags:
       - tasks
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -5966,7 +5640,6 @@ paths:
                   disabled_frames: []
                 summary: restore all validation frames
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -6040,7 +5713,6 @@ paths:
             schema:
               $ref: '#/components/schemas/TaskFileRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -6137,7 +5809,6 @@ paths:
       tags:
       - users
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -6163,7 +5834,6 @@ paths:
       tags:
       - users
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -6193,7 +5863,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedUserRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -6218,7 +5887,6 @@ paths:
       tags:
       - users
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -6234,7 +5902,6 @@ paths:
       tags:
       - users
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -6335,7 +6002,6 @@ paths:
       tags:
       - webhooks
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -6375,7 +6041,6 @@ paths:
               $ref: '#/components/schemas/WebhookWriteRequest'
         required: true
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -6401,7 +6066,6 @@ paths:
       tags:
       - webhooks
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -6432,7 +6096,6 @@ paths:
               $ref: '#/components/schemas/WebhookWriteRequest'
         required: true
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -6462,7 +6125,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedWebhookWriteRequest'
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -6487,7 +6149,6 @@ paths:
       tags:
       - webhooks
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -6521,7 +6182,6 @@ paths:
       tags:
       - webhooks
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -6553,7 +6213,6 @@ paths:
       tags:
       - webhooks
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -6585,7 +6244,6 @@ paths:
       tags:
       - webhooks
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -6607,7 +6265,6 @@ paths:
       tags:
       - webhooks
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -6632,7 +6289,6 @@ paths:
       tags:
       - webhooks
       security:
-      - tokenAuth: []
       - signatureAuth: []
       - sessionAuth: []
         csrfAuth: []
@@ -6803,81 +6459,6 @@ components:
           oneOf:
           - $ref: '#/components/schemas/ShapeType'
           - $ref: '#/components/schemas/NullEnum'
-    ApiTokenCreateRead:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          description: A free-form name for the API key. Need not be unique. 50 characters
-            max.
-          maxLength: 50
-        created_date:
-          type: string
-          format: date-time
-          readOnly: true
-        updated_date:
-          type: string
-          format: date-time
-          readOnly: true
-        expiry_date:
-          type: string
-          format: date-time
-          nullable: true
-          title: Expires
-          description: Once API key expires, clients cannot use it anymore.
-        read_only:
-          type: boolean
-        owner:
-          type: integer
-          readOnly: true
-        value:
-          type: string
-      required:
-      - value
-    ApiTokenRead:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          description: A free-form name for the API key. Need not be unique. 50 characters
-            max.
-          maxLength: 50
-        created_date:
-          type: string
-          format: date-time
-          readOnly: true
-        updated_date:
-          type: string
-          format: date-time
-          readOnly: true
-        expiry_date:
-          type: string
-          format: date-time
-          nullable: true
-          title: Expires
-          description: Once API key expires, clients cannot use it anymore.
-        read_only:
-          type: boolean
-        owner:
-          type: integer
-          readOnly: true
-    ApiTokenWriteRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        expiry_date:
-          type: string
-          format: date-time
-          nullable: true
-        read_only:
-          type: boolean
     AssetRead:
       type: object
       properties:
@@ -8810,29 +8391,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AnnotationConflict'
-    PaginatedApiTokenReadList:
-      type: object
-      required:
-      - count
-      - results
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=4
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=2
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiTokenRead'
     PaginatedCloudStorageReadList:
       type: object
       required:
@@ -9287,17 +8845,6 @@ components:
           nullable: true
         markdown:
           type: string
-    PatchedApiTokenWriteRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        expiry_date:
-          type: string
-          format: date-time
-          nullable: true
-        read_only:
-          type: boolean
     PatchedCloudStorageWriteRequest:
       type: object
       properties:
@@ -11498,16 +11045,6 @@ components:
       in: query
       name: sign
       description: Can be used to share URLs to private links
-    tokenAuth:
-      type: http
-      scheme: bearer
-      x-token-prefix: Bearer
-      description: |
-        To authenticate using an API token, you need to include
-        the 'Authentication' header with the 'Bearer ' prefix
-
-        An API token has to be issued in the user profile section of the UI or
-        via the /auth/api_tokens API before this authentication method can be used.
 externalDocs:
   description: CVAT documentation
   url: https://docs.cvat.ai/docs/
