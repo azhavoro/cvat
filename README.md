@@ -9,6 +9,8 @@
 
 # Computer Vision Annotation Tool (CVAT)
 
+Test
+
 [![CI][ci-img]][ci-url]
 [![Gitter chat][gitter-img]][gitter-url]
 [![Discord][discord-img]][discord-url]
