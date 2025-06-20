@@ -16,7 +16,7 @@ jobs:
     permissions:
       contents: write
     env:
-      RELEASE_TYPE: ${{ github.ref == 'develop' && 'release' || 'hotfix' }}
+      RELEASE_TYPE: ${{ github.ref_name == 'develop' && 'release' || 'hotfix' }}
     runs-on: ubuntu-latest
     steps:
       - name: Validate version number
