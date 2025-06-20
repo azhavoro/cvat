@@ -13,6 +13,8 @@ on:
           #        default: false
 jobs:
   main:
+    permissions:
+      contents: write
     env:
       RELEASE_TYPE: ${{ github.ref == 'develop' && 'release' || 'hotfix' }}
     runs-on: ubuntu-latest
