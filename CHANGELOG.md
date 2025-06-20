@@ -16,6 +16,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-1.1.1'></a>
+## \[1.1.1\] - 2025-06-20
+
+### Added
+
+- Serverless tracker functions may now accept shapes other than rectangles
+  (<https://github.com/cvat-ai/cvat/pull/9517>)
+
+- \[CLI\] A more helpful error message is now raised if a loaded
+  auto-annotation function has no `spec` attribute
+  (<https://github.com/cvat-ai/cvat/pull/9530>)
+
+- `CVAT_CACHE_ITEM_MAX_SIZE` option that limits size of data chunk at CVAT level.
+  Generating data that exceeds the size will result in an exception.
+  (<https://github.com/cvat-ai/cvat/pull/9524>)
+
+### Changed
+
+- Updated zooming algorithm, it works much smoother with touchpads and a little bit smoother for mice
+  (<https://github.com/cvat-ai/cvat/pull/9523>)
+
+- Kvrocks: configured auto compaction at scheduled time.
+  (<https://github.com/cvat-ai/cvat/pull/9524>)
+
+### Fixed
+
+- Reduced excessive DB use in dataset export
+  (<https://github.com/cvat-ai/cvat/pull/9472>)
+
+- Page size selector on organization page was not working
+  (<https://github.com/cvat-ai/cvat/pull/9521>)
+
+- Incorrect width of project field on webhook setup page
+  (<https://github.com/cvat-ai/cvat/pull/XXXX>)
+
+- Relevant task quality reports now can be reused in project quality reports
+  (<https://github.com/cvat-ai/cvat/pull/9538>)
+
 <a id='changelog-2.39.0'></a>
 ## \[2.39.0\] - 2025-06-05
 
