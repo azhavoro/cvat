@@ -72,7 +72,7 @@ jobs:
 
       - name: Create release pull request
         env:
-          GH_TOKEN: "${{ steps.gen-token.outputs.token }}"
+          GH_TOKEN: ${{ github.token }}
         run: |
           ./dev/gh_release_notes.sh \
             | gh pr create \
