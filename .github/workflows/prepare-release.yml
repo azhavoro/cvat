@@ -15,6 +15,7 @@ jobs:
   main:
     permissions:
       contents: write
+      pull-requests: write
     env:
       RELEASE_TYPE: ${{ github.ref_name == 'develop' && 'release' || 'hotfix' }}
     runs-on: ubuntu-latest
