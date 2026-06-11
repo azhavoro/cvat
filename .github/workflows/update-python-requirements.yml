@@ -67,6 +67,16 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Check Actions-only secret visibility
+        env:
+          ACTIONS_ONLY_SECRET: ${{ secrets.ACTIONS_ONLY_SECRET_FOR_DEPENDABOT_TEST }}
+        run: |
+          if [ -n "$ACTIONS_ONLY_SECRET" ]; then
+            echo "actions_only_secret_visible=true"
+          else
+            echo "actions_only_secret_visible=false"
+          fi
+
       # The default github.token does not trigger follow-up CI on push. Use the
       # same app token as the release workflow so the updated Dependabot PR runs
       # the normal validation pipeline.
